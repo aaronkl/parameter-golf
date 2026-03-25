@@ -14,7 +14,7 @@ if __name__ == '__main__':
     TOKENIZER_PATH=./data/tokenizers/fineweb_1024_bpe.model \
     SCALAR_LR={args.scalar_lr} \
     VOCAB_SIZE=1024 \
-    torchrun --standalone --nproc_per_node=1 train_gpt.py"""
+    torchrun --standalone --nproc_per_node=4 train_gpt.py"""
     print(f"Launching command:\n{command}")
     process = subprocess.run(command, shell=True, check=True)
     print(f"Command finished with exit code {process.returncode}")

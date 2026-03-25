@@ -10,12 +10,12 @@ config_space = {
 }
 
 tuner = Tuner(
-    trial_backend=LocalBackend(entry_point='wrapper.py'),
+    trial_backend=LocalBackend(entry_point='launch_baseline.py'),
     scheduler=CQR(
         config_space,
         metric='val_loss',
     ),
     stop_criterion=StoppingCriterion(max_wallclock_time=3600), # total runtime in seconds
-    n_workers=4,  # how many trials are evaluated in parallel
+    n_workers=1,  # how many trials are evaluated in parallel
 )
 tuner.run()
