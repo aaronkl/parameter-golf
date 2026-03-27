@@ -1019,8 +1019,11 @@ def main() -> None:
                 f"step:{step}/{args.iterations} val_loss:{val_loss:.4f} val_bpb:{val_bpb:.4f} "
                 f"train_time:{training_time_ms:.0f}ms step_avg:{training_time_ms / max(step, 1):.2f}ms"
             )
-            report(step=step, val_loss=val_loss, val_bpb=val_bpb)
+
             torch.cuda.synchronize()
+            local_rank = int(os.environ.get("LOCAL_RANK", -1))
+            if local_rank == 0:
+                report(step=step, val_loss=val_loss, val_bpb=val_bpb)
             t0 = time.perf_counter()
 
         if last_step:
