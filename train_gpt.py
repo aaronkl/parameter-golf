@@ -735,6 +735,28 @@ def main() -> None:
     global zeropower_via_newtonschulz5
 
     code = Path(__file__).read_text(encoding="utf-8")
+
+    parser = ArgumentParser()
+    parser.add_argument('--embed_lr', type=float)
+    parser.add_argument('--head_lr', type=float)
+    parser.add_argument('--tied_embed_lr', type=float)
+    parser.add_argument('--tied_embed_init_std', type=float)
+    parser.add_argument('--matrix_lr', type=float)
+    parser.add_argument('--scalar_lr', type=float)
+    parser.add_argument('--muon_momentum', type=float)
+    parser.add_argument('--muon_backend_steps', type=int)
+    parser.add_argument('--muon_momentum_warmup_start', type=float)
+    parser.add_argument('--muon_momentum_warmup_steps', type=int)
+    parser.add_argument('--beta1', type=float)
+    parser.add_argument('--beta2', type=float)
+    parser.add_argument('--adam_eps', type=float)
+    parser.add_argument('--grad_clip_norm', type=float)
+    parser.add_argument('--warmdown_iters', type=int)
+    parser.add_argument('--warmup_steps', type=int)
+    cmd_args, _ = parser.parse_known_args()
+    cmd_args = vars(cmd_args)
+    for k, v in cmd_args.items():
+        os.environ[k] = str(v)
     args = Hyperparameters()
     zeropower_via_newtonschulz5 = torch.compile(zeropower_via_newtonschulz5)
 

@@ -43,7 +43,9 @@ default_config = {
 }
 
 tuner = Tuner(
-    trial_backend=LocalBackend(entry_point='launch_baseline.py', num_gpus_per_trial=4),
+    trial_backend=LocalBackend(entry_point='train_gpt.py',
+                               binary='"torchrun --standalone --nproc_per_node=4',
+                               num_gpus_per_trial=4),
     scheduler=CQR(
         config_space,
         metric='val_loss',
