@@ -18,6 +18,7 @@ import time
 import uuid
 import zlib
 from pathlib import Path
+from argparse import ArgumentParser
 
 import numpy as np
 import sentencepiece as spm
