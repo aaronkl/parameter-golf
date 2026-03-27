@@ -3,6 +3,9 @@ import logging
 from datetime import datetime 
 from argparse import ArgumentParser
 from syne_tune.constants import ST_CHECKPOINT_DIR
+from syne_tune import Reporter
+
+report = Reporter()
 
 if __name__ == '__main__':
     root = logging.getLogger()
@@ -56,4 +59,24 @@ if __name__ == '__main__':
     print(f"Launching command:\n{command}")
     process = subprocess.run(command, shell=True, check=True)
     print(f"Command finished with exit code {process.returncode}")
+
+    # Extract final val_loss from the log file
+    final_val_loss = "N/A"
+    try:
+        with open(run_id_str, 'r') as f:
+            for line in f:
+                if "final_int8_zlib_roundtrip val_loss" in line:
+                    parts = line.split()
+                    for i, part in enumerate(parts):
+                        if "val_loss:" in part:
+                            final_val_loss = part.split(":")[1]
+                            break
+                    break
+    except FileNotFoundError:
+        print(f"Error: Log file {run_id_str} not found.")
+    except Exception as e:
+        print(f"Error reading log file: {e}")
+    
+    print(f"Final Validation Loss: {final_val_loss}")
+    report(val_loss=final_val_loss)
 
