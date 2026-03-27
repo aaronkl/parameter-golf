@@ -1,6 +1,6 @@
 import subprocess
 import logging
-
+from datetime import datetime 
 from argparse import ArgumentParser
 from syne_tune.constants import ST_CHECKPOINT_DIR
 
@@ -30,7 +30,8 @@ if __name__ == '__main__':
     dict_args = vars(args)
     dict_args.pop(ST_CHECKPOINT_DIR)
 
-    run_id_str = "_" + "_".join([f"{k}_{getattr(args, k)}" for k in dict_args.keys()])
+ #   run_id_str = "_" + "_".join([f"{k}_{getattr(args, k)}" for k in dict_args.keys()])
+    run_id_str = f"log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
     command = f"""RUN_ID=baseline{run_id_str} \
     DATA_PATH=./data/datasets/fineweb10B_sp1024/ \
     TOKENIZER_PATH=./data/tokenizers/fineweb_1024_bpe.model \

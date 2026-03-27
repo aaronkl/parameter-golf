@@ -43,7 +43,7 @@ default_config = {
 }
 
 tuner = Tuner(
-    trial_backend=LocalBackend(entry_point='launch_baseline.py'),
+    trial_backend=LocalBackend(entry_point='launch_baseline.py', num_gpus_per_trial=4),
     scheduler=CQR(
         config_space,
         metric='val_loss',
