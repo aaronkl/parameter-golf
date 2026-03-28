@@ -755,10 +755,23 @@ def main() -> None:
     parser.add_argument('--warmdown_iters', type=int)
     parser.add_argument('--warmup_steps', type=int)
     cmd_args, _ = parser.parse_known_args()
-    cmd_args = vars(cmd_args)
-    for k, v in cmd_args.items():
-        os.environ[k] = str(v)
     args = Hyperparameters()
+    args.embed_lr=cmd_args.embed_lr
+    args.head_lr=cmd_args.head_lr
+    args.tied_embed_lr=cmd_args.tied_embed_lr
+    args.tied_embed_init_std=cmd_args.tied_embed_init_std
+    args.matrix_lr=cmd_args.matrix_lr
+    args.scalar_lr=cmd_args.scalar_lr
+    args.muon_momentum=cmd_args.muon_momentum
+    args.muon_backend_steps=cmd_args.muon_backend_steps
+    args.muon_momentum_warmup_start=cmd_args.muon_momentum_warmup_start
+    args.muon_momentum_warmup_steps=cmd_args.muon_momentum_warmup_steps
+    args.beta1=cmd_args.beta1
+    args.beta2=cmd_args.beta2
+    args.adam_eps=cmd_args.adam_eps
+    args.grad_clip_norm=cmd_args.grad_clip_norm
+    args.warmdown_iters=cmd_args.warmdown_iters
+    args.warmup_steps=cmd_args.warmup_steps
     zeropower_via_newtonschulz5 = torch.compile(zeropower_via_newtonschulz5)
 
     # -----------------------------
