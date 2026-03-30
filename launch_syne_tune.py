@@ -2,7 +2,7 @@
 from syne_tune import Tuner, StoppingCriterion
 from syne_tune.backend import LocalBackend
 from syne_tune.config_space import randint, uniform, loguniform
-from syne_tune.optimizer.baselines import  CQR
+from syne_tune.optimizer.baselines import  ASHACQR
 
 # hyperparameter search space to consider
 config_space = {
@@ -46,8 +46,9 @@ tuner = Tuner(
     trial_backend=LocalBackend(entry_point='train_gpt.py',
                                binary='torchrun --standalone --nproc_per_node=4',
                                num_gpus_per_trial=4),
-    scheduler=CQR(
+    scheduler=ASHACQR(
         config_space,
+        time_attr='step',
         metric='val_loss',
         points_to_evaluate=[default_config]
     ),
