@@ -50,6 +50,7 @@ tuner = Tuner(
         config_space,
         time_attr='step',
         metric='val_loss',
+        max_t=6,
         points_to_evaluate=[default_config]
     ),
     stop_criterion=StoppingCriterion(max_wallclock_time=3600 * 24), # total runtime in seconds

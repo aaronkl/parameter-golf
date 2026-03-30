@@ -1036,7 +1036,7 @@ def main() -> None:
             torch.cuda.synchronize()
             local_rank = int(os.environ.get("LOCAL_RANK", -1))
             if local_rank == 0:
-                report(step=step, val_loss=val_loss, val_bpb=val_bpb)
+                report(step=int(step / args.val_loss_every) , val_loss=val_loss, val_bpb=val_bpb)
             t0 = time.perf_counter()
 
         if last_step:
